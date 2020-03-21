@@ -164,8 +164,11 @@ static void irq_work_run_list(struct llist_head *list)
 		atomic_xchg(&work->flags, flags);
 
 		check_start_time(ts);
+		lockdep_irq_work_enter(work);
 		work->func(work);
+		lockdep_irq_work_exit(work);
 		check_process_time("irq_work %ps", ts, work->func);
+
 		/*
 		 * Clear the BUSY bit and return to the free state if
 		 * no-one else claimed it meanwhile.
