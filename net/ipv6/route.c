@@ -4305,7 +4305,7 @@ struct fib6_info *rt6_get_dflt_router_expires(struct net_device *dev)
 
 	rcu_read_lock();
 	for_each_fib6_node_rt_rcu(&table->tb6_root) {
-		if (dev == rt->fib6_nh.fib_nh_dev &&
+		if (dev == rt->fib6_nh[0].fib_nh_dev &&
 		    ((rt->fib6_flags & RTF_ADGE) == RTF_ADGE))
 			break;
 	}
